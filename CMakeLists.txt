@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(tetris)
+project(tetris_cpp)
 
 set(CXX_STANDARD 20)
 
