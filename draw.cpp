@@ -10,19 +10,13 @@ namespace dw
     const std::u32string style4 = U" ╭╮╰╯│─";
     const std::u32string cur_stytle = style1;
 
-    // one block take two cols
-    inline int block2col(int b)
-    {
-        return 2 * b - 1;
-    }
-
     void windows(int top, int left, int width, int height, std::string title)
     {
         if (width < 2 || height < 2)
             return;
 
         // top
-        tc::move_to(top, block2col(left));
+        tc::move_to(top, ut::b2c(left));
         for (int col = 0; col < width; ++col)
         {
             if (col == 0)
@@ -34,7 +28,7 @@ namespace dw
         }
 
         // bottom
-        tc::move_to(top + height - 1, block2col(left));
+        tc::move_to(top + height - 1, ut::b2c(left));
         for (int col = 0; col < width; ++col)
         {
             if (col == 0)
@@ -48,21 +42,21 @@ namespace dw
         // left
         for (int row = 1; row < height - 1; row++)
         {
-            tc::move_to(top + row, block2col(left));
+            tc::move_to(top + row, ut::b2c(left));
             std::cout << ut::utf32_to_utf8({cur_stytle[0], cur_stytle[5]});;
         }
 
         // right
         for (int row = 1; row < height - 1; row++)
         {
-            tc::move_to(top + row, block2col(left + width - 1));
+            tc::move_to(top + row, ut::b2c(left + width - 1));
             std::cout << ut::utf32_to_utf8({cur_stytle[5]});;
         }
 
         // title
         if (title.length() > width)
             return;
-        tc::move_to(top, block2col(left) + (width * 2 - title.length()) / 2);
+        tc::move_to(top, ut::b2c(left) + (width * 2 - title.length()) / 2);
         std::cout << title;
         return;
     }
