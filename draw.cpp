@@ -43,14 +43,14 @@ namespace dw
         for (int row = 1; row < height - 1; row++)
         {
             tc::move_to(top + row, ut::b2c(left));
-            std::cout << ut::utf32_to_utf8({cur_stytle[0], cur_stytle[5]});;
+            std::cout << ut::utf32_to_utf8({cur_stytle[0], cur_stytle[5]});
         }
 
         // right
         for (int row = 1; row < height - 1; row++)
         {
             tc::move_to(top + row, ut::b2c(left + width - 1));
-            std::cout << ut::utf32_to_utf8({cur_stytle[5]});;
+            std::cout << ut::utf32_to_utf8({cur_stytle[5]});
         }
 
         // title
@@ -61,4 +61,42 @@ namespace dw
         return;
     }
 
+    /// show tetrimino 1
+    // void tetromino(gm::Tetromino &t, int top, int left)
+    // {
+    //     tc::move_to(top, ut::b2c(left));
+    //     for (int i = 0; i < t.size(); ++i)
+    //     {
+    //         tc::move_to(top + i, ut::b2c(left));
+
+    //         for (int j = 0; j < t[0].size(); ++j)
+    //         {
+    //             if (t[i][j] > 0)
+    //             {
+    //                 tc::set_back_color((int)gm::tetro_color[t[i][j]]);
+    //                 std::cout << "  ";
+    //             }
+    //             else
+    //             {
+    //                 tc::reset_color();
+    //                 std::cout << "  ";
+    //             }
+    //         }
+    //     }
+    //     return;
+    // }
+
+    void tetromino(gm::Tetromino &t, int top, int left, int index)
+    {
+        tc::move_to(top, ut::b2c(left));
+        tc::set_back_color(t[index][0].second);
+        std::cout << "  ";
+        for (auto p : t[index]) {
+            if (p.first > 'A') continue;
+            // row = row - dy
+            // col = col + dx
+            tc::move_to(top - p.second, ut::b2c(left + p.first));
+            std::cout << "  ";
+        }
+    }
 }

@@ -4,12 +4,16 @@ namespace gm
 {
     bool running;
     int row, col;
+    int cur_index;
+    Tetromino cur;
 
     void init()
     {
         running = true;
         row = 2;
         col = 15;
+        cur_index = 1;
+        cur = Z;
     }
 
     void quit()
@@ -18,7 +22,8 @@ namespace gm
     }
     void rotate()
     {
-        row --;
+        // cur = rotate(cur);
+        cur_index = (cur_index + 1) % 4;
     }
     void left()
     {

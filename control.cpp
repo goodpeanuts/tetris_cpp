@@ -32,12 +32,11 @@ namespace gm
         while (running)
         {
             command = getch();
-            auto it = comm_func.find(command);
-            if (it != comm_func.end())
+            if (comm_func.find(command) == comm_func.end())
             {
-                it->second();
-            } else {
                 command_default_op();
+            } else {
+                comm_func[command]();
             }
         }
     }

@@ -7,6 +7,7 @@
 #include <functional>
 #include <locale>
 #include <codecvt>
+#include <vector>
 
 #include <termios.h>
 
