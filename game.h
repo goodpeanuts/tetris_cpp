@@ -6,6 +6,7 @@
 namespace gm
 {
     extern bool running;
+    extern bool locking;
     extern Piece one_piece;
     extern Matrix playfield;
     extern Matrix frame;
@@ -18,9 +19,12 @@ namespace gm
     Piece pick();
     void render();
     void update();
+    void lock();
+    void clear();
     void quit();
-    void rotate();
-    void left();
-    void right();
-    void down();
+    bool rotate();
+    bool left();
+    bool right();
+    bool down();
+    void drop();
 } // namespace gm

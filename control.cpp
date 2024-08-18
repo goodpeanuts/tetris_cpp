@@ -11,7 +11,8 @@ namespace gm
         {KEY_W, command_rotate},
         {KEY_A, command_left},
         {KEY_S, command_down},
-        {KEY_D, command_right}
+        {KEY_D, command_right},
+        {KEY_SPACE, command_drop},
     };
 
     char getch()
@@ -64,6 +65,10 @@ namespace gm
     void command_down()
     {
         down();
+    }
+    void command_drop()
+    {
+        drop();
     }
     void command_default_op()
     {

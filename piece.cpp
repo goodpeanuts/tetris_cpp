@@ -1,4 +1,5 @@
 #include "piece.h"
+#include "game.h"
 
 namespace gm
 {
@@ -9,10 +10,10 @@ namespace gm
         {
             auto [dx, dy] = get_mino(i);
 
-            if (ox + dx < 0 || ox + dx > (*sp_playfield).size() || oy + dy < 0 || oy + dy > (*sp_playfield)[0].size() - 1)
+            if (ox + dx < 0 || ox + dx > (*sp_playfield)[0].size() - 1 || oy + dy < 0 || oy + dy > (*sp_playfield).size() - 1)
                 return false;
 
-            if ((*sp_playfield)[ox + dx][oy + dy] > 0)
+            if ((*sp_playfield)[oy + dy][ox + dx] > 0)
                 return false;
         }
         return true;
@@ -37,36 +38,45 @@ namespace gm
         return tetro_set[index][0].second;
     }
 
-    void Piece::left()
+    bool Piece::left()
     {
-        move(-1, 0);
+        return move(-1, 0);
     }
 
-    void Piece::right()
+    bool Piece::right()
     {
-        move(1, 0);
+        return move(1, 0);
     }
 
-    void Piece::rotate()
+    bool Piece::rotate()
     {
-        index = (index + 1) % 4;
-    }
+        int new_index = (index + 1) % 4;
+        Piece new_piece(tetro_set, x, y, new_index);
+        if (new_piece.test(x, y))
+        {
+            index = new_index;
+            return true;
+        }
+        return false;
+    } 
 
-    void Piece::move(int dx, int dy)
+    bool Piece::move(int dx, int dy)
     {
         if (test(x + dx, y + dy))
         {
             x += dx;
             y += dy;
+            return true;
         }
+        return false;
     }
 
-    Piece::Piece(Tetromino &t, int x0, int y0, int i) : tetro_set(t), x(x0), y(y0), index(i), sp_playfield(nullptr)
+    Piece::Piece(Tetromino &t, int x0, int y0, int i) : tetro_set(t), x(x0), y(y0), index(i), sp_playfield(std::make_shared<Matrix>(playfield))
     {
     }
-    void Piece::down()
+    bool Piece::down()
     {
-        move(0, -1);
+        return move(0, -1);
     }
     void Piece::set_playfield(std::shared_ptr<Matrix> p)
     {

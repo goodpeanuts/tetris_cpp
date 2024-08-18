@@ -108,23 +108,23 @@ namespace dw
         {
             for (int y = 0; y < 20; ++y)
             {
-                if (buffer[x][y] == frame[x][y])
+                if (buffer[y][x] == frame[y][x])
                     continue;
-                buffer[x][y] = frame[x][y];
+                buffer[y][x] = frame[y][x];
 
                 row = top + 20 - y - 1;
                 col = left + x;
                 tc::move_to(row, ut::b2c(col), oss);
-                if (frame[x][y] > 0)
+                if (frame[y][x] > 0)
                 {
                     tc::reset_color(oss);
-                    tc::set_back_color(frame[x][y], oss);
+                    tc::set_back_color(frame[y][x], oss);
                     oss << "  ";
                 }
-                else if (frame[x][y] < 0)
+                else if (frame[y][x] < 0)
                 {
                     tc::reset_color(oss);
-                    tc::set_front_color(0 - frame[x][y], oss);
+                    tc::set_front_color(0 - frame[y][x], oss);
                     oss << "\u25e3\u25e5";
                 }
                 else
