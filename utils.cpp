@@ -6,11 +6,10 @@ namespace ut
     int fps()
     {
         static auto start = std::chrono::steady_clock::now();
-        auto end = start;
         static int frame_count = 0;
         static int fps = 0;
 
-        end = std::chrono::steady_clock::now();
+        auto end = std::chrono::steady_clock::now();
         frame_count ++;
         if (end - start > 1s)
         {
@@ -32,5 +31,16 @@ namespace ut
     int b2c(int b)
     {
         return 2 * b - 1;
+    }
+
+    bool timer(std::chrono::microseconds sec)
+    {
+        static auto start = std::chrono::steady_clock::now();
+        auto end = std::chrono::steady_clock::now();
+        if (end - start > sec) {
+            start = end;
+            return true;
+        }
+        return false;
     }
 } // namespace ut

@@ -86,7 +86,7 @@ namespace dw
     //     return;
     // }
 
-    void tetromino(gm::Tetromino &t, int top, int left, int index)
+    void tetromino(Tetromino &t, int top, int left, int index)
     {
         tc::move_to(top, ut::b2c(left));
         tc::set_back_color(t[index][0].second);
@@ -97,6 +97,37 @@ namespace dw
             // col = col + dx
             tc::move_to(top - p.second, ut::b2c(left + p.first));
             std::cout << "  ";
+        }
+    }
+    void frame(Matrix &frame, int top, int left)
+    {
+        int row, col;
+        for (int x = 0; x < 10; ++x)
+        {
+            for (int y = 0; y < 20; ++y)
+            {
+                row = top + 20 - y - 1;
+                col = left + x;
+                tc::move_to(row, ut::b2c(col));
+                if (frame[x][y] > 0)
+                {
+                    tc::reset_color();
+                    tc::set_back_color(frame[x][y]);
+                    std::cout << "  ";
+                    
+                }
+                else if (frame[x][y] < 0)
+                {
+                    tc::reset_color();
+                    tc::set_front_color(0 - frame[x][y]);
+                    std::cout << "\u25e3\u25e5";
+                }
+                else
+                {
+                    tc::reset_color();
+                    std::cout<< "\u30FB";
+                }
+            }
         }
     }
 }

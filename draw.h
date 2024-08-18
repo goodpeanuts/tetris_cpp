@@ -15,5 +15,6 @@ namespace dw
     /// display tetromino 1
     // void tetromino(gm::Tetromino& t, int top, int left);
 
-    void tetromino(gm::Tetromino& t, int top, int left, int index);
+    void tetromino(Tetromino& t, int top, int left, int index);
+    void frame(Matrix& frame, int top, int left);
 } // namespace dw

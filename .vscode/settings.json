@@ -51,6 +51,8 @@
         "thread": "cpp",
         "typeinfo": "cpp",
         "codecvt": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "optional": "cpp",
+        "ranges": "cpp"
     }
 }

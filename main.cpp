@@ -4,6 +4,7 @@
 #include "draw.h"
 #include "control.h"
 #include "game.h"
+#include <stdexcept>
 
 void init() 
 {
@@ -16,6 +17,7 @@ void loop()
 {
     int i = 1;
     while (gm::running) {
+        gm::update();
         tc::clean_screen();
         dw::windows(1, 1, 9, 6, "Hold");
         dw::windows(1, 10, 12, 22, "Tetris");
@@ -26,11 +28,8 @@ void loop()
         tc::move_to(10, 4);
         std::cout << "FPS:" << ut::fps();
 
-        tc::move_to(gm::row, ut::b2c(gm::col));
-        // tc::set_back_color(15);
-        // std::cout<< "  ";
-        
-        dw::tetromino(gm::cur, gm::row, gm::col, gm::cur_index);
+        dw::frame(gm::frame, 2, 11);
+
         tc::reset_color();
 
         std::cout << std::flush;
@@ -50,6 +49,7 @@ void exit()
  
 int main() 
 {
+    freopen("../error.log", "a", stderr);
     init();
     loop();
     exit();
