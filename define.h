@@ -11,6 +11,8 @@
 #include <memory>
 #include <cassert>
 #include <ranges>
+#include <sstream>
+#include <ostream>
 
 #include <termios.h>
 

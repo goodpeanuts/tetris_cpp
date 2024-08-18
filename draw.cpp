@@ -1,6 +1,4 @@
 #include "draw.h"
-#include "terminal.h"
-#include "utils.h"
 
 namespace dw
 {
@@ -91,8 +89,10 @@ namespace dw
         tc::move_to(top, ut::b2c(left));
         tc::set_back_color(t[index][0].second);
         std::cout << "  ";
-        for (auto p : t[index]) {
-            if (p.first > 'A') continue;
+        for (auto p : t[index])
+        {
+            if (p.first > 'A')
+                continue;
             // row = row - dy
             // col = col + dx
             tc::move_to(top - p.second, ut::b2c(left + p.first));
@@ -101,33 +101,39 @@ namespace dw
     }
     void frame(Matrix &frame, int top, int left)
     {
+        std::ostringstream oss;
+        static Matrix buffer(frame.size(), std::vector<int>(frame[0].size(), -1));
         int row, col;
         for (int x = 0; x < 10; ++x)
         {
             for (int y = 0; y < 20; ++y)
             {
+                if (buffer[x][y] == frame[x][y])
+                    continue;
+                buffer[x][y] = frame[x][y];
+
                 row = top + 20 - y - 1;
                 col = left + x;
-                tc::move_to(row, ut::b2c(col));
+                tc::move_to(row, ut::b2c(col), oss);
                 if (frame[x][y] > 0)
                 {
-                    tc::reset_color();
-                    tc::set_back_color(frame[x][y]);
-                    std::cout << "  ";
-                    
+                    tc::reset_color(oss);
+                    tc::set_back_color(frame[x][y], oss);
+                    oss << "  ";
                 }
                 else if (frame[x][y] < 0)
                 {
-                    tc::reset_color();
-                    tc::set_front_color(0 - frame[x][y]);
-                    std::cout << "\u25e3\u25e5";
+                    tc::reset_color(oss);
+                    tc::set_front_color(0 - frame[x][y], oss);
+                    oss << "\u25e3\u25e5";
                 }
                 else
                 {
-                    tc::reset_color();
-                    std::cout<< "\u30FB";
+                    tc::reset_color(oss);
+                    oss << "\u30FB";
                 }
             }
         }
+        std::cout << oss.str();
     }
 }

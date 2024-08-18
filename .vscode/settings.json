@@ -53,6 +53,7 @@
         "codecvt": "cpp",
         "map": "cpp",
         "optional": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "sstream": "cpp"
     }
 }

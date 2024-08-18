@@ -1,6 +1,9 @@
 #pragma once
 #include "define.h"
 #include "tetromino.h"
+#include "terminal.h"
+#include "utils.h"
+
 /**
  *  ui: layout
  *  dw: drat  | gm: game logic | ut: utils
