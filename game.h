@@ -7,8 +7,10 @@ namespace gm
 {
     extern bool running;
     extern bool ending;
+    extern bool reseting;
     extern bool locking;
     extern bool holding;
+    extern bool helping;
     extern Piece one_piece;
     extern Matrix playfield;
     extern Matrix frame;
@@ -33,6 +35,8 @@ namespace gm
     bool down();
     void drop();
     void hold();
+    void reset();
+    void help();
 
     void preview();
     void load_field();

@@ -29,6 +29,8 @@ using namespace std::chrono_literals;
 #define KEY_Z 'z'
 #define KEY_X 'x'
 #define KEY_C 'c'
+#define KEY_R 'r'
+#define KEY_H 'h'
 #define KEY_SPACE ' '
 
 using Matrix = std::vector<std::vector<int>>;

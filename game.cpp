@@ -4,8 +4,10 @@ namespace gm
 {
     bool running;
     bool ending;
+    bool reseting;
     bool locking;
     bool holding;
+    bool helping;
     int score, level, lines;
     Matrix playfield;
     Piece one_piece;
@@ -19,8 +21,10 @@ namespace gm
         srand(std::time(0));
         running = true;
         ending = false;
+        reseting = false;
         locking = false;
         holding = false;
+        helping = false;
         score = lines = 0;
         playfield = Matrix(22, std::vector<int>(10, 0));
         level_upgrade();
@@ -33,11 +37,11 @@ namespace gm
     Piece pick()
     {
         assert(incoming.size() > 0);
-        Piece p(incoming.front(), 4, 20, 0);
+        Piece p(incoming.front(), 4, 19, 0);
         incoming.pop();
         
         // game over
-        if (!p.test(4, 20))
+        if (!p.test(4, 19))
             ending = true;
 
         preview();
@@ -79,6 +83,7 @@ namespace gm
                 one_piece = pick();
                 locking = false;
                 holding = false;
+                reseting = false;
             }
             else
             {
@@ -95,7 +100,7 @@ namespace gm
     void clear()
     {
         int count = 0;
-        for (auto it = playfield.begin(); it != playfield.end(); ++it)
+        for (auto it = playfield.begin(); it != playfield.end();)
         {
             bool full = true;
             for (auto cell : *it)
@@ -110,8 +115,11 @@ namespace gm
             {
                 it = playfield.erase(it);
                 playfield.push_back(std::vector<int>(it->size(), 0));
-                --it;
                 count++;
+            }
+            else
+            {
+                ++it;
             }
         }
         switch (count)
@@ -180,6 +188,18 @@ namespace gm
             one_piece = Piece(tmp, 4, 20, 0);
         }
         holding = true;
+    }
+
+    void reset()
+    {
+        init();
+        reseting = true;
+    }
+
+    void help()
+    {
+        helping = !helping;
+        reseting = !helping;
     }
 
     void preview()
