@@ -6,6 +6,7 @@
 namespace gm
 {
     extern bool running;
+    extern bool ending;
     extern bool locking;
     extern bool holding;
     extern Piece one_piece;
@@ -14,6 +15,7 @@ namespace gm
     extern std::queue<Tetromino> incoming;
     extern std::chrono::microseconds duration;
     extern Tetromino hold_piece;
+    extern int score, level, lines;
     // extern int row, col;
     // extern Tetromino cur;
     // extern int cur_index;
@@ -34,6 +36,8 @@ namespace gm
 
     void preview();
     void load_field();
+
+    void level_upgrade();
 
     void fill(Matrix& m, const Piece& p);
 } // namespace gm

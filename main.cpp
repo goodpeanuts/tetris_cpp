@@ -30,6 +30,20 @@ void loop()
 
         tc::move_to(10, 4);
         std::cout << "FPS:" << ut::fps();
+        tc::move_to(12, 4);
+        std::cout << "Level:" << gm::level;
+        tc::move_to(13, 4);
+        std::cout << "Score:" << gm::score;
+        tc::move_to(14, 4);
+        std::cout << "Lines:" << gm::lines;
+
+        if (gm::ending)
+        {
+            dw::windows(9, 12, 8, 3, "");
+            tc::move_to(10, ut::b2c(13));
+            tc::set_back_color((int)Color::Red);
+            std::cout << " Game Over!";
+        }
 
         dw::frame(gm::frame, 2, 11);
         dw::preview(gm::incoming, 2, 23);
@@ -38,7 +52,7 @@ void loop()
         tc::reset_color();
 
         std::cout << std::flush;
-        std::this_thread::sleep_for(10ms);
+        // std::this_thread::sleep_for(10ms);
     }
 }
 
