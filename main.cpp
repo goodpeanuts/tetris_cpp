@@ -16,7 +16,7 @@ void init()
     dw::windows(1, 1, 9, 6, "Hold");
     dw::windows(1, 10, 12, 22, "Tetris");
     dw::windows(7, 1, 9, 16, "Status");
-    dw::windows(1, 1, 9, 6, "Info");
+    dw::windows(19, 22, 8, 4, "Info");
     dw::windows(1, 22, 8, 18, "Next");
     // setbuf(stdout, nullptr);
 }
@@ -32,6 +32,7 @@ void loop()
         std::cout << "FPS:" << ut::fps();
 
         dw::frame(gm::frame, 2, 11);
+        dw::preview(gm::incoming, 2, 23);
 
         tc::reset_color();
 

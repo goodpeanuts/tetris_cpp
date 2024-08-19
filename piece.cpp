@@ -3,7 +3,7 @@
 
 namespace gm
 {
-    bool Piece::test(int ox, int oy)
+    bool Piece::test(int ox, int oy) const
     {
         assert(sp_playfield != nullptr);
         for (int i = 0; i < 4; ++i)
@@ -19,7 +19,7 @@ namespace gm
         return true;
     }
 
-    std::pair<int, int> Piece::get_mino(int i)
+    std::pair<int, int> Piece::get_mino(int i) const
     {
         assert(i >= 0 && i <= 3);
         if (i == 0)
@@ -27,15 +27,14 @@ namespace gm
         return tetro_set[index][i];
     }
 
-    std::pair<int, int> Piece::get_position()
+    std::pair<int, int> Piece::get_position() const
     {
         return {x, y};
     }
 
-    int Piece::get_color()
+    int Piece::get_color() const
     {
-
-        return tetro_set[index][0].second;
+        return status ? tetro_set[index][0].second : 0 - tetro_set[index][0].second;
     }
 
     bool Piece::left()
@@ -58,7 +57,7 @@ namespace gm
             return true;
         }
         return false;
-    } 
+    }
 
     bool Piece::move(int dx, int dy)
     {
@@ -71,7 +70,7 @@ namespace gm
         return false;
     }
 
-    Piece::Piece(Tetromino &t, int x0, int y0, int i) : tetro_set(t), x(x0), y(y0), index(i), sp_playfield(std::make_shared<Matrix>(playfield))
+    Piece::Piece(Tetromino &t, int x0, int y0, int i, int status) : tetro_set(t), x(x0), y(y0), index(i), sp_playfield(std::make_shared<Matrix>(playfield)), status(status)
     {
     }
     bool Piece::down()
@@ -81,5 +80,9 @@ namespace gm
     void Piece::set_playfield(std::shared_ptr<Matrix> p)
     {
         sp_playfield = p;
+    }
+    void Piece::set_shadow_status()
+    {
+        this->status = 0;
     }
 } // namespace gm

@@ -13,6 +13,7 @@
 #include <ranges>
 #include <sstream>
 #include <ostream>
+#include <queue>
 
 #include <termios.h>
 

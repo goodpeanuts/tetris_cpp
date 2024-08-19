@@ -1,4 +1,6 @@
 #include "draw.h"
+#include "piece.h"
+#include "game.h"
 
 namespace dw
 {
@@ -6,7 +8,7 @@ namespace dw
     const std::u32string style2 = U" ┏┓┗┛┃━";
     const std::u32string style3 = U" ╔╗╚╝║═";
     const std::u32string style4 = U" ╭╮╰╯│─";
-    const std::u32string cur_stytle = style1;
+    const std::u32string cur_style = style1;
 
     void windows(int top, int left, int width, int height, std::string title)
     {
@@ -18,11 +20,11 @@ namespace dw
         for (int col = 0; col < width; ++col)
         {
             if (col == 0)
-                std::cout << ut::utf32_to_utf8({cur_stytle[0], cur_stytle[1]});
+                std::cout << ut::utf32_to_utf8({cur_style[0], cur_style[1]});
             else if (col == width - 1)
-                std::cout << ut::utf32_to_utf8({cur_stytle[2]});
+                std::cout << ut::utf32_to_utf8({cur_style[2]});
             else
-                std::cout << ut::utf32_to_utf8({cur_stytle[6], cur_stytle[6]});
+                std::cout << ut::utf32_to_utf8({cur_style[6], cur_style[6]});
         }
 
         // bottom
@@ -30,25 +32,25 @@ namespace dw
         for (int col = 0; col < width; ++col)
         {
             if (col == 0)
-                std::cout << ut::utf32_to_utf8({cur_stytle[0], cur_stytle[3]});
+                std::cout << ut::utf32_to_utf8({cur_style[0], cur_style[3]});
             else if (col == width - 1)
-                std::cout << ut::utf32_to_utf8({cur_stytle[4]});
+                std::cout << ut::utf32_to_utf8({cur_style[4]});
             else
-                std::cout << ut::utf32_to_utf8({cur_stytle[6], cur_stytle[6]});
+                std::cout << ut::utf32_to_utf8({cur_style[6], cur_style[6]});
         }
 
         // left
         for (int row = 1; row < height - 1; row++)
         {
             tc::move_to(top + row, ut::b2c(left));
-            std::cout << ut::utf32_to_utf8({cur_stytle[0], cur_stytle[5]});
+            std::cout << ut::utf32_to_utf8({cur_style[0], cur_style[5]});
         }
 
         // right
         for (int row = 1; row < height - 1; row++)
         {
             tc::move_to(top + row, ut::b2c(left + width - 1));
-            std::cout << ut::utf32_to_utf8({cur_stytle[5]});
+            std::cout << ut::utf32_to_utf8({cur_style[5]});
         }
 
         // title
@@ -59,7 +61,7 @@ namespace dw
         return;
     }
 
-    /// show tetrimino 1
+    /// show tetromino 1
     // void tetromino(gm::Tetromino &t, int top, int left)
     // {
     //     tc::move_to(top, ut::b2c(left));
@@ -101,36 +103,56 @@ namespace dw
     }
     void frame(Matrix &frame, int top, int left)
     {
-        std::ostringstream oss;
         static Matrix buffer(frame.size(), std::vector<int>(frame[0].size(), -1));
-        int row, col;
-        for (int x = 0; x < 10; ++x)
+        Matrix f(frame.begin(), frame.begin() + 20);
+        draw_in_matrix(f, top, left, &buffer, "\u30FB");
+    }
+    void preview(std::queue<Tetromino> incoming, int top, int left)
+    {
+        static Matrix buffer(15, std::vector<int>(6, -1));
+        Matrix preview_field(15, std::vector<int>(6, 0));
+        for (int y = 12; incoming.size() > 0; y -= 3)
         {
-            for (int y = 0; y < 20; ++y)
+            gm::Piece p(incoming.front(), 2, y, 0);
+            gm::fill(preview_field, p);
+            incoming.pop();
+        }
+        draw_in_matrix(preview_field, top, left, &buffer);
+    }
+    void draw_in_matrix(Matrix &m, int top, int left, Matrix *buffer, std::string blank)
+    {
+        std::ostringstream oss;
+        int row, col;
+        for (int y = 0; y < m.size(); ++y)
+        {
+            for (int x = 0; x < m[0].size(); ++x)
             {
-                if (buffer[y][x] == frame[y][x])
-                    continue;
-                buffer[y][x] = frame[y][x];
+                if (buffer != nullptr)
+                {
+                    if ((*buffer)[y][x] == m[y][x])
+                        continue;
+                    (*buffer)[y][x] = m[y][x];
+                }
 
-                row = top + 20 - y - 1;
+                row = top + m.size() - y - 1;
                 col = left + x;
                 tc::move_to(row, ut::b2c(col), oss);
-                if (frame[y][x] > 0)
+                if (m[y][x] > 0)
                 {
                     tc::reset_color(oss);
-                    tc::set_back_color(frame[y][x], oss);
+                    tc::set_back_color(m[y][x], oss);
                     oss << "  ";
                 }
-                else if (frame[y][x] < 0)
+                else if (m[y][x] < 0)
                 {
                     tc::reset_color(oss);
-                    tc::set_front_color(0 - frame[y][x], oss);
+                    tc::set_front_color(0 - m[y][x], oss);
                     oss << "\u25e3\u25e5";
                 }
                 else
                 {
                     tc::reset_color(oss);
-                    oss << "\u30FB";
+                    oss << blank;
                 }
             }
         }

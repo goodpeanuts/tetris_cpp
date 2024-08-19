@@ -10,6 +10,7 @@ namespace gm
     extern Piece one_piece;
     extern Matrix playfield;
     extern Matrix frame;
+    extern std::queue<Tetromino> incoming;
     extern std::chrono::microseconds duration;
     // extern int row, col;
     // extern Tetromino cur;
@@ -27,4 +28,8 @@ namespace gm
     bool right();
     bool down();
     void drop();
+
+    void preview();
+
+    void fill(Matrix& m, const Piece& p);
 } // namespace gm

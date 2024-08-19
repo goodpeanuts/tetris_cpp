@@ -55,5 +55,13 @@
         "optional": "cpp",
         "ranges": "cpp",
         "sstream": "cpp"
-    }
+    },
+    "cSpell.ignoreWords": [
+        "get_mino"
+    ],
+    "cSpell.words": [
+        "Tetris",
+        "tetro_color",
+        "tetro_set"
+    ]
 }
