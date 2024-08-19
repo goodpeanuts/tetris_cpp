@@ -7,11 +7,13 @@ namespace gm
 {
     extern bool running;
     extern bool locking;
+    extern bool holding;
     extern Piece one_piece;
     extern Matrix playfield;
     extern Matrix frame;
     extern std::queue<Tetromino> incoming;
     extern std::chrono::microseconds duration;
+    extern Tetromino hold_piece;
     // extern int row, col;
     // extern Tetromino cur;
     // extern int cur_index;
@@ -28,6 +30,7 @@ namespace gm
     bool right();
     bool down();
     void drop();
+    void hold();
 
     void preview();
     void load_field();

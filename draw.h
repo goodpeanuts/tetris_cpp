@@ -21,6 +21,7 @@ namespace dw
     void tetromino(Tetromino& t, int top, int left, int index);
     void frame(Matrix& frame, int top, int left);
     void preview(std::queue<Tetromino> incoming, int top, int left);
+    void hold(Tetromino &h, int top, int left);
 
     void draw_in_matrix(Matrix& m, int top, int left, Matrix* buffer = nullptr, std::string blank = "  ");
 } // namespace dw

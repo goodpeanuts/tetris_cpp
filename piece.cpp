@@ -34,6 +34,7 @@ namespace gm
 
     int Piece::get_color() const
     {
+        if (status == 2) return (int)Color::White;
         return status ? tetro_set[index][0].second : 0 - tetro_set[index][0].second;
     }
 
@@ -88,6 +89,10 @@ namespace gm
     {
         return move(0, -1);
     }
+    Tetromino Piece::get_tetromino() const
+    {
+        return tetro_set;
+    }
     void Piece::set_playfield(std::shared_ptr<Matrix> p)
     {
         sp_playfield = p;
@@ -95,5 +100,9 @@ namespace gm
     void Piece::set_shadow_status()
     {
         this->status = 0;
+    }
+    void Piece::set_disable()
+    {
+        this->status = 2;
     }
 } // namespace gm

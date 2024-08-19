@@ -33,6 +33,7 @@ void loop()
 
         dw::frame(gm::frame, 2, 11);
         dw::preview(gm::incoming, 2, 23);
+        dw::hold(gm::hold_piece, 2, 2);
 
         tc::reset_color();
 

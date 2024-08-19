@@ -9,7 +9,7 @@ namespace gm
         Tetromino tetro_set;
         int index; // 0 R 2 L
         int x, y;
-        int type;
+        // 0: shadow 1: normal 2: disable
         int status;
         std::shared_ptr<Matrix> sp_playfield;
 
@@ -26,8 +26,10 @@ namespace gm
         bool right();
         bool rotate(int i);
         bool down();
+        Tetromino get_tetromino() const;
         void set_playfield(std::shared_ptr<Matrix> p); // deprecated
         void set_shadow_status();
+        void set_disable();
         bool test(int ox, int oy) const;
 
         // ~Piece();

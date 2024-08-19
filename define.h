@@ -27,9 +27,10 @@ using namespace std::chrono_literals;
 #define KEY_D 'd'
 #define KEY_Z 'z'
 #define KEY_X 'x'
+#define KEY_C 'c'
 #define KEY_SPACE ' '
 
 using Matrix = std::vector<std::vector<int>>;
-using Tetromino = std::array<std::array<std::pair<int, int>, 4>, 4>;
+using Tetromino = std::vector<std::vector<std::pair<int, int>>>;
 using Offset = std::vector<std::vector<std::pair<int, int>>>;
 using std::ranges::views::iota;

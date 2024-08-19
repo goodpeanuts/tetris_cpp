@@ -14,6 +14,7 @@ namespace gm
         {KEY_A, command_left},
         {KEY_S, command_down},
         {KEY_D, command_right},
+        {KEY_C, command_hold},
         {KEY_SPACE, command_drop},
     };
 
@@ -79,6 +80,10 @@ namespace gm
     void command_drop()
     {
         drop();
+    }
+    void command_hold()
+    {
+        hold();
     }
     void command_default_op()
     {

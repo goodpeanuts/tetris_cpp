@@ -119,6 +119,21 @@ namespace dw
         }
         draw_in_matrix(preview_field, top, left, &buffer);
     }
+    void hold(Tetromino &h, int top, int left)
+    {
+        static Matrix buffer(4, std::vector<int>(7, -1));
+        Matrix hold_field(4, std::vector<int>(7, 0));
+
+        if (h.empty())
+            return;
+
+        // TODO: have to convert type between `Piece` in function `fill` and `Tetromino`, can it realize through the way like `from/into` trait in Rust or Java  
+        gm::Piece p(h, 3, 1, 0);
+        if (gm::holding)
+            p.set_disable();
+        gm::fill(hold_field, p);
+        draw_in_matrix(hold_field, top, left, &buffer);
+    }
     void draw_in_matrix(Matrix &m, int top, int left, Matrix *buffer, std::string blank)
     {
         std::ostringstream oss;
