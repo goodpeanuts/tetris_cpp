@@ -38,7 +38,8 @@ namespace gm
         Piece shadow = one_piece;
         shadow.set_shadow_status();
 
-        while (shadow.down());
+        while (shadow.down())
+            ;
         fill(frame, shadow);
     }
 
@@ -77,7 +78,7 @@ namespace gm
     {
         for (auto it = playfield.begin(); it != playfield.end(); ++it)
         {
-            bool full;
+            bool full = true;
             for (auto cell : *it)
             {
                 if (cell == 0)
@@ -137,7 +138,7 @@ namespace gm
         }
     }
 
-    void fill(Matrix &m, const Piece& p)
+    void fill(Matrix &m, const Piece &p)
     {
         auto [x, y] = p.get_position();
         try
@@ -145,8 +146,8 @@ namespace gm
             for (auto i : iota(0, 4))
             {
                 auto [dx, dy] = p.get_mino(i);
-                if (m.at(y + dy).at(x + dx) == 0)
-                    m.at(y + dy).at(x + dx) = p.get_color();
+                // if (m.at(y + dy).at(x + dx) == 0)
+                m.at(y + dy).at(x + dx) = p.get_color();
             }
         }
         catch (const std::out_of_range &e)
