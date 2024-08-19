@@ -6,6 +6,8 @@ add_definitions(-std=c++20)
 aux_source_directory(. src)
 add_executable(tetris ${src})
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/tetris.map DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # 启用 AddressSanitizer

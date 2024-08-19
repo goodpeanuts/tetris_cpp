@@ -23,13 +23,14 @@ namespace gm
     void lock();
     void clear();
     void quit();
-    bool rotate();
+    bool rotate(int i);
     bool left();
     bool right();
     bool down();
     void drop();
 
     void preview();
+    void load_field();
 
     void fill(Matrix& m, const Piece& p);
 } // namespace gm

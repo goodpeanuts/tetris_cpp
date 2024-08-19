@@ -10,7 +10,9 @@ namespace gm
     void start_listener();
 
     void command_quit();
-    void command_rotate();
+    void command_rotate_R();
+    void command_rotate_L();
+    void command_rotate_2();
     void command_left();
     void command_right();
     void command_down();

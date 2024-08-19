@@ -47,14 +47,27 @@ namespace gm
         return move(1, 0);
     }
 
-    bool Piece::rotate()
+    bool Piece::rotate(int i)
     {
-        int new_index = (index + 1) % 4;
-        Piece new_piece(tetro_set, x, y, new_index);
-        if (new_piece.test(x, y))
+        assert(i >= 1 && i <=3);
+        int new_index = (index + i) % 4;
+        Offset &test_offset = (tetro_set == I) ? offset_i : (tetro_set == O) ? offset_o
+                                                                             : offset;
+        for (auto i : iota(0, (int)test_offset[0].size()))
         {
-            index = new_index;
-            return true;
+            auto [dx_0, dy_0] = test_offset[index][i];
+            auto [dx_1, dy_1] = test_offset[new_index][i];
+            auto dx = dx_0 - dx_1;
+            auto dy = dy_0 - dy_1;
+
+            Piece new_piece(tetro_set, x, y, new_index);
+            if (new_piece.test(x + dx, y + dy))
+            {
+                index = new_index;
+                x += dx;
+                y += dy;
+                return true;
+            }
         }
         return false;
     }
@@ -70,9 +83,7 @@ namespace gm
         return false;
     }
 
-    Piece::Piece(Tetromino &t, int x0, int y0, int i, int status) : tetro_set(t), x(x0), y(y0), index(i), sp_playfield(std::make_shared<Matrix>(playfield)), status(status)
-    {
-    }
+    Piece::Piece(const Tetromino &t, int x0, int y0, int i, int status) : tetro_set(t), x(x0), y(y0), index(i), sp_playfield(std::make_shared<Matrix>(playfield)), status(status) {}
     bool Piece::down()
     {
         return move(0, -1);

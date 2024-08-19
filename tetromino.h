@@ -8,7 +8,8 @@ namespace gm
     /// Tetromino 1
     // using Tetromino = std::vector<std::vector<int>>;
     // extern Tetromino I, J, L, O, S, T, Z;
+    // Tetromino rotate(Tetromino &t);
     
     extern Tetromino I, J, L, O, S, T, Z;
-    Tetromino rotate(Tetromino &t);
+    extern Offset offset, offset_i, offset_o;
 } // namespace gm

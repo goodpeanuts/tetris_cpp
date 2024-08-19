@@ -17,6 +17,7 @@ namespace gm
         locking = false;
         playfield = Matrix(22, std::vector<int>(10, 0));
         preview();
+        load_field(); // FIXME: why must put this before pick() 
         one_piece = pick();
         frame = playfield;
         duration = 500ms;
@@ -100,9 +101,9 @@ namespace gm
     {
         running = false;
     }
-    bool rotate()
+    bool rotate(int i)
     {
-        return one_piece.rotate();
+        return one_piece.rotate(i);
     }
     bool left()
     {
@@ -138,6 +139,23 @@ namespace gm
         }
     }
 
+    void load_field()
+    {
+        std::ifstream fs("tetris.map");
+        assert(fs.is_open());
+        std::string line;
+        for (auto &row : playfield | std::ranges::views::take(20) | std::ranges::views::reverse)
+        {
+            getline(fs, line);
+            for (auto i : iota(0, 10))
+            {
+                if (line[i] == '1')
+                    row[i] = (int)Color::Grey;
+            }
+        }
+        fs.close();
+    }
+
     void fill(Matrix &m, const Piece &p)
     {
         auto [x, y] = p.get_position();
@@ -146,8 +164,8 @@ namespace gm
             for (auto i : iota(0, 4))
             {
                 auto [dx, dy] = p.get_mino(i);
-                // if (m.at(y + dy).at(x + dx) == 0)
-                m.at(y + dy).at(x + dx) = p.get_color();
+                if (m.at(y + dy).at(x + dx) == 0)
+                    m.at(y + dy).at(x + dx) = p.get_color();
             }
         }
         catch (const std::out_of_range &e)
