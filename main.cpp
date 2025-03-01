@@ -9,6 +9,9 @@
 
 void init()
 {
+#ifdef _WIN32
+    system("chcp 65001");
+#endif
     tc::hide_cursor();
     gm::init();
     gm::start_listener();

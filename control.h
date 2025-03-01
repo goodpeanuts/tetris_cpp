@@ -4,8 +4,6 @@
 namespace gm
 {
     extern char command;
-
-    char getch();
     void key_event();
     void start_listener();
 
